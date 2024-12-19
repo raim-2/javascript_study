@@ -8,12 +8,12 @@ const user = {
 console.log(user)
 
 /**
-Object.assing(); // 객체 복제 - 깊은복사
+Object.assign(); // 객체 복제 - 깊은복사
 Object.keys(); // 키 배열 반환
 Object.values(); // 값 배열 반환
 Object.entires(); // 키와 값 모두 배열로 반환
 Object.fromEntries(); // entries()와 반대로 키/값으로 묶인 배열을 -> 객체로 만들어줌
-Object.assing();*/
+*/
 
 //객체 복사
 
@@ -29,8 +29,8 @@ console.log(boy.name, cloneUser.name)
 //하나의 객체에 두 변수가 접근하고 있는 것
 
 // 첫번째 매개변수는 초기값, 두번째부터 들어오는 객체들이 초기값이 병합됨
-const newBoy = Object.assign({}, user);
-const newBoy2 = Object.assign({'hobby': 'soccer'}, user);
+const newBoy = Object.assign({}, boy);
+const newBoy2 = Object.assign({'hobby': 'soccer'}, boy);
 newBoy.name ='bob';
 console.log(newBoy, boy.name, newBoy.name, newBoy2)
 
