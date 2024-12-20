@@ -32,7 +32,7 @@ console.log(arr3.indexOf(1,1));
 
 /**
  * arr.find(fn)
- * arr.findIndex(fn) //없으면 -1반환환
+ * arr.findIndex(fn) //없으면 -1반환
  *
  * 첫번째 true값만 반환 + 없으면 undefined반환
  */

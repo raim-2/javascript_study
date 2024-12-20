@@ -161,3 +161,32 @@ arr2.reverse().forEach((num)=>{
 });
 
 console.log(arr1);
+
+//예시2
+let pageUser = {name: 'Mike'};
+let info ={age: 30};
+let fe = ['js', 'react'];
+let lang = ['korean', 'english'];
+
+// pageUser = Object.assign({},
+//     pageUser,
+//     info,
+//     {
+//         skills :[]
+//     }
+// )
+
+// fe.forEach(item => {
+//     pageUser.skills.push(item);
+// });
+// lang.forEach(item => {
+//     pageUser.skills.push(item);
+// });
+
+pageUser = {
+    ...user,
+    ...info,
+    skills: [...fe, ...lang],
+};
+
+console.log(pageUser);
