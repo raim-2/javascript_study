@@ -127,6 +127,7 @@ const f6 = (message) => {
 
 
 //프로미스 체이닝
+
 setTimeout(() => {
     console.time('f4시작');
 }, 1000);
@@ -143,11 +144,26 @@ f4()
 /**
  * Promise.all
  * 배열로 받는다.-> 4,5,6 모두 실행되야 뜸
- * 다 보여주거나, 다 안보여주거나 밖에 안됨
+ * 다 보여주거나, 다 안보여주거나 밖에 안됨 -> 다 될 때까지 기다림
  */
 
 console.time('x') //time()로 시간잴 수 있다.
+
 Promise.all([f4(), f5(), f6()]).then((result) => {
     console.log(result);
     console.timeEnd('x');
 })
+
+/**
+ * Promise.race
+ * 하나라도 끝나면 끝낸다. all과 반대
+ */
+Promise.race([f4(), f5(), f6()]).then((result) => {
+    console.log(result);
+    console.timeEnd('x');
+})
+
+/**
+ * 4번 주문 완료
+ * x: 1.013s
+ */
