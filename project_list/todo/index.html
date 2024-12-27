@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" dark-type="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+    <link rel="stylesheet" href="/project_list/todo/css/common.css">
+</head>
+<body>
+    <form action="" class="js-todo-form">
+        <h1 class="main-title">Todo List</h1>
+        <!-- todo 입력 창 -->
+        <div class="todo-input-wrap todo">
+            <input type="text" placeholder="해야할 일을 입력하세요." class="todo-input">
+            <button type="button" class="btn">
+                <span class="hidden">추가 버튼</span>
+            </button>
+        </div>
+        <ul class="todo-list" id="todoList"></ul>
+        <div class="btn_wrap">
+            <button type="button" class="btn">선택 삭제</button>
+            <button type="button" class="btn">전체 삭제</button>
+        </div>
+    </form>
+    <script src="todo.js"></script>
+</body>
+</html>

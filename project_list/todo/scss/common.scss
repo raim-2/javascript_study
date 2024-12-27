@@ -1,0 +1,114 @@
+@charset "UTF-8";
+@import url(./reset.css);
+
+/* 공통 css */
+
+//로 표기된 주석은 컴파일 안된다. /* */ 이 주석은 컴파일 된다.
+//$변수명 : 속성값;
+
+// 변수 설정
+$bg-color : #fff;
+$main-font : 'pretendard', sans-serif;
+$basic-font-size : 1.6rem;
+$tit-color: #1d1d1d;
+$text-color: #555;
+$border : 1px solid #c6c6c6;
+$basic-border-radius : 12px;
+$input-radius: 8px;
+
+$bg-dark :  #000;
+$dark-mode-color : #fff;
+
+// flex 믹스인
+@mixin flex($direction, $justify-content, $align-items) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify-content;
+    align-items: $align-items;
+}
+
+@mixin border($border, $radius) {
+    border: $border;
+    border-radius: $radius;
+}
+
+html {
+    background: $bg-color;
+    font: {
+        family: $main-font;
+        size: 62.5%; /* 10px */
+    };
+    color: $text-color;
+
+        &[dark-type="dark"] {
+            background-color: $bg-dark;
+            color: $dark-mode-color;
+        }
+}
+
+body {
+    overflow: hidden;
+    @include flex(row, center, center);
+    min-width: 320px;
+    margin: 0;
+    font-size: $basic-font-size; /* 16px */
+}
+
+input {
+    padding: 1rem;
+    $input-radius : 8px;
+    @include border($border, $input-radius);
+}
+
+.btn {
+    border: none;
+    padding: 1rem;
+    border-radius: $basic-border-radius;
+}
+
+.hidden {
+    overflow: hidden;
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    margin-left: 0;
+    clip-path: rect(0,0,0,0);
+}
+
+/* 스타일 css */
+.js-todo-form {
+    width: 50%;
+    padding: 2rem;
+    @include border($border, $basic-border-radius);
+
+    .main-title {
+        margin: 2rem;
+        color: $tit-color;
+        text-align: center;
+    }
+    .btn_wrap {
+        width: fit-content;
+        margin-left: auto;
+    }
+}
+
+.todo {
+    &-input-wrap {
+        display: flex;
+        gap: 1rem;
+    }
+    &-input {
+        flex: 1;
+        min-width: auto;
+    }
+}
+
+@media screen and (max-width: 757px) {
+    body {
+        min-width: 300px
+    }
+    .js-todo-form {
+        min-width: 90%;
+        width: 90%;
+    }
+}

@@ -1,0 +1,83 @@
+@charset "UTF-8";
+@import url(./reset.css);
+/* 공통 css */
+html {
+  background: #fff;
+  font-family: "pretendard", sans-serif;
+  font-size: 62.5%; /* 10px */
+  color: #555;
+}
+html[dark-type=dark] {
+  background-color: #000;
+  color: #fff;
+}
+
+body {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  min-width: 320px;
+  margin: 0;
+  font-size: 1.6rem; /* 16px */
+}
+
+input {
+  padding: 1rem;
+  border: 1px solid #c6c6c6;
+  border-radius: 8px;
+}
+
+.btn {
+  border: none;
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.hidden {
+  overflow: hidden;
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  margin-left: 0;
+  clip-path: rect(0, 0, 0, 0);
+}
+
+/* 스타일 css */
+.js-todo-form {
+  width: 50%;
+  padding: 2rem;
+  border: 1px solid #c6c6c6;
+  border-radius: 12px;
+}
+.js-todo-form .main-title {
+  margin: 2rem;
+  color: #1d1d1d;
+  text-align: center;
+}
+.js-todo-form .btn_wrap {
+  width: fit-content;
+  margin-left: auto;
+}
+
+.todo-input-wrap {
+  display: flex;
+  gap: 1rem;
+}
+.todo-input {
+  flex: 1;
+  min-width: auto;
+}
+
+@media screen and (max-width: 757px) {
+  body {
+    min-width: 300px;
+  }
+  .js-todo-form {
+    min-width: 90%;
+    width: 90%;
+  }
+}
+
+/*# sourceMappingURL=common.css.map */
