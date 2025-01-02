@@ -25,13 +25,15 @@
 
 
 /**
- * 정보 요청해서 받아오는 방식 중 최근에 많이 사요하는 것 - fetch
+ * ajax
+ * 자바스크립트를 이용해 비동기적으로 서버와 브라우저가 데이터를 교환할 수 있도록 하는 통신 방식
+ *
+ * 정보 요청해서 받아오는 방식 중 최근에 많이 사용하는 것 - fetch
  */
 
-// let info = '';
-// console.log(info)
 
 /**
+ * json이나 n
  * JSON.stringify
  * 자바스크립트 값이나 객체를 json 문자열로 바꿔준다.
  * JSON.parse()
@@ -47,7 +49,7 @@ function replacer(key, value) {
     return undefined;
 }
 
-replacer();
+// replacer();
 
 const user = {
     name: 'lee',
@@ -60,4 +62,7 @@ console.log(typeof user); //object
 //string으로 바꿔준다.
 const jsonString = JSON.stringify(user, replacer);
 console.log(typeof jsonString, jsonString); //string {"name":"lee","age":20,"gender":"male"}
+
+const obj = JSON.parse(jsonString);
+console.log(obj)
 

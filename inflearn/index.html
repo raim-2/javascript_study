@@ -6,6 +6,22 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <form action="">
+        <input type="text" class="city-input" placeholder="영문으로 도시 이름을 입력하세요." value="123">
+    </form>
+    <p id="temperature"></p>
+    <script>
+        const cityInput = document.querySelector('.city-input');
+        let city  = cityInput.value;
+        console.log(city)
+        async function logJSONData() {
+            const response = await fetch("https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=mi7ouVTM4%2BbaQQNfhtcrarZxguQvmLMIQol6ZCF9wwAkW2k9UjYapgZcBT%2BSQHbxpPLlmjgqPjGzMq8TM1HjKg%3D%3D&pageNo=1&numOfRows=5&dataType=json&base_date=20250102&base_time=0500&nx=55&ny=127");
+            const jsonData = await response.json();
+            // console.log(jsonData.response.body.items.item[0].fcstValue)
+            document.getElementById('temperature').innerHTML = jsonData.response.body.items.item[0].fcstValue;
+        }
+        
+        logJSONData();
+    </script>
 </body>
 </html>
