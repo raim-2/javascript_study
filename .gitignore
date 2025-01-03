@@ -2,3 +2,5 @@
 img_slider/
 /js_action.js
 *.map
+/inflearn/apikeys.js
+.env

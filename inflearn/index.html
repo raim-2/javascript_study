@@ -6,22 +6,63 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="">
-        <input type="text" class="city-input" placeholder="영문으로 도시 이름을 입력하세요." value="123">
+    <form action="./result.html" method="post">
+        <input type="text" class="city-input" placeholder="영문으로 도시 이름을 입력하세요.">
+        <button type="submit">제출</button>
     </form>
-    <p id="temperature"></p>
-    <script>
+    <p id="weather"></p>
+    <!-- <p id="log"></p> -->
+    <script src="./project2.js" type="module"></script>
+    <!-- <script type="module">
+        import config from "./apikeys.js";
+        // 1. 인풋에 입력 -> 2. 인풋에서 value 뽑아서 -> 3. url에 넣는다.
+        // 4. url이 valid해지면 -> 이후 api콜을 한다.
         const cityInput = document.querySelector('.city-input');
-        let city  = cityInput.value;
-        console.log(city)
-        async function logJSONData() {
-            const response = await fetch("https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=mi7ouVTM4%2BbaQQNfhtcrarZxguQvmLMIQol6ZCF9wwAkW2k9UjYapgZcBT%2BSQHbxpPLlmjgqPjGzMq8TM1HjKg%3D%3D&pageNo=1&numOfRows=5&dataType=json&base_date=20250102&base_time=0500&nx=55&ny=127");
-            const jsonData = await response.json();
-            // console.log(jsonData.response.body.items.item[0].fcstValue)
-            document.getElementById('temperature').innerHTML = jsonData.response.body.items.item[0].fcstValue;
+        const log = document.getElementById("log");
+        let cityName = '';
+        let url;
+
+        const apiKey = config.getApiKey();
+
+        function getCityName(e) {
+            // console.log(111111)
+            let cityName = cityInput.value;
+            // console.log(cityName)
+            return cityName;
+        }
+
+        // function logKey(e) {
+        //     log.textContent += ` ${e.code}`;
+        // }
+
+        //인풋에 적힌 후 커서 밖으로 이동 시 이벤트실행
+        cityInput.addEventListener('keydown', function(e){
+            // e.preventDefault();
+            // logKey(e);
+            if(e.keyCode == 13){
+                e.preventDefault();
+                getCityName(e);
+
+                cityName = getCityName();
+                url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`
+                console.log(cityName, url, typeof url);
+            };
+        });
+
+        async function getJSONData() {
+            try {
+                const response = await fetch(url);
+                const jsonData = await response.json();
+                // let weather = jsonData.weather[0].description;
+                console.log(jsonData,response)
+                document.getElementById('weather').innerHTML = weather;
+            } catch(err) {
+                console.log(err);
+                
+            };
         }
         
-        logJSONData();
-    </script>
+        getJSONData();
+    </script> -->
 </body>
 </html>
