@@ -6,9 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="./result.html" method="post">
-        <input type="text" class="city-input" placeholder="영문으로 도시 이름을 입력하세요.">
-        <button type="submit">제출</button>
+    <form action="" method="post">
+        <input type="text" class="city-input" placeholder="영문으로 도시 이름을 입력하세요." name="data">
+        <button type="button" name="search" value="search" class="search-btn">검색</button>
+        <!-- <button type="submit" formaction="./result.html" formmethod="post" formtarget="_self">제출</button> -->
+        <!-- <input type="submit" value="submit" name="submit" onclick="window.location='https://www.naver.com/'"> -->
     </form>
     <p id="weather"></p>
     <!-- <p id="log"></p> -->

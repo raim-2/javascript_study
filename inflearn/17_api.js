@@ -59,7 +59,7 @@ const user = {
 
 console.log(typeof user); //object
 
-//string으로 바꿔준다.
+//string으로 바꿔준다. 
 const jsonString = JSON.stringify(user, replacer);
 console.log(typeof jsonString, jsonString); //string {"name":"lee","age":20,"gender":"male"}
 

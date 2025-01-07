@@ -4,3 +4,4 @@ img_slider/
 *.map
 /inflearn/apikeys.js
 .env
+/keys
