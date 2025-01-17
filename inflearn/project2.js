@@ -5,6 +5,9 @@ import config from "./apikeys.js";
 const cityInput = document.querySelector('.city-input');
 const weather = document.getElementById('weather');
 const searchBtn = document.querySelector('.search-btn');
+let timeToReset = reSetTime(); // 리셋까지 남은 시간(초)
+let count = 0;
+const maxCalls = 5;
 // const log = document.getElementById("log");
 
 //api키 가져오기
@@ -17,15 +20,15 @@ function getCityName() {
 
 //url 생성
 function createWeatherUrl(cityName) {
-    return `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`
+    return `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&lang=kr&appid=${apiKey}`
 }
 
 async function getWeatherData(url) {
     try {
+        console.log(url)
         const response = await fetch(url);
         console.log('fetch 연결 status : ' + response.status); //응답 상태 확인
         const jsonData = await response.json();
-        let count = await limitApiCalls();
         return jsonData;
     } catch(err) {
         console.log('fetch 통신 에러!!!!!!!!');
@@ -33,17 +36,106 @@ async function getWeatherData(url) {
     };
 }
 
+// const member = (data) =>{
+//     return fetch(`url`,{
+//         method: 'POST',
+//         // headers:{
+//         //     'Content-Type':'application/json'
+//         // },
+//         body: JSON.stringify({
+//             'memberId': 'sss',
+//             'age':20
+//         })
+//     })
+// }
+
+
+// const feexx = (data) =>{
+//     return fetch(`url/${data}`,{
+//         method: 'GET'
+//     })
+// }
+
+// const infoUrl = '60.196.157.219:8004/minScript'
+const infoForm = document.getElementById('infoForm');
+const responseDiv = document.getElementById('response');
+
+const infoUrl = 'https://jsonplaceholder.typicode.com/posts'
+infoForm.action = infoUrl;
+
+function answerRequest(data) {
+    return fetch(infoUrl,{ //이 서버 주소로 요청해라
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+        // mode: "no-cors",
+        body: JSON.stringify(data),
+        // body: JSON.stringify({
+        //     "userId" : "asd",
+        //     "title" : "sdfksjldfksdf",
+        //     "body" : "sdfksjldfksdfsdflksdfj;ksdf;slkdf;lk"
+        // }) //데이터를 json형태의 문자열로 변환
+    }).then((res) => { //응답이 오면
+        responseDiv.innerText = res.status + ' 요청 성공';
+        return res.json();
+    }).then((json) => {
+        console.log(json);
+        let jsonText = JSON.stringify(json);
+        responseDiv.innerText += '\n' + jsonText;
+        return jsonText;
+    }).catch((err) => {
+        console.log(err);
+        responseDiv.innerText = '요청 실패';
+    });
+}
+
+document.querySelector('.submit').addEventListener('click', (e) => {
+    e.preventDefault();
+    // answerRequest(member);
+
+    async function getMember() {
+        try {
+            let formdata = new FormData(infoForm);
+            let data = {};
+            
+            // 폼데이터 키/값 확인
+            for (const [key, value] of formdata.entries()) {
+                console.log(`${key}: ${value}`);
+                data[key] = value;
+                // console.log(data);
+            }
+            const result = await answerRequest(data);
+            console.log('응답데이터 :' + result);
+            return result;
+        } catch(err) {
+            console.log('fetch 통신 에러 ' + err)
+        };
+    };
+
+    getMember();
+});
+
+function reSetTime(){
+    return 10;
+}
+
 //호출횟수 제한 클로저
 function callCountLimiter(maxCalls) {
-    let count = 0;
+    console.log("실행~~~~~~~~~~~~~~~");
     let timeoutId;
+    let timeCheck;
+
+    //호출 횟수 초기화
     function resetCount() {
         count = 0;
-        console.log('api 호출 횟수 초기화');
+        timeToReset = reSetTime();
+        // console.log('api 호출 횟수 초기화');
+        document.getElementById('count').innerHTML = `api 호출 횟수 초기화 0/${maxCalls}`;
     }
 
     //자정(혹 지정시간)까지 남은 시간을 밀리초로 반환하는 함수
-    function getMillisecondsUntilMidnight(left) {
+    function getMillisecondsUntilMidnight(timeToReset) {
         const now = new Date(); //현재 날짜+시간
         /*
         이렇게 하면 날짜 계산에 오류 발생 가능
@@ -52,7 +144,7 @@ function callCountLimiter(maxCalls) {
         */
 
         //new Date(year, monthIndex, day, hours);
-        const afterDelay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds() + left); //5초 뒤
+        const afterDelay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds() + timeToReset); //5초 뒤
         //const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0); //다음날 자정
         let timeLeft = afterDelay.getTime() - now.getTime();
         console.log(timeLeft/1000/60/60);
@@ -61,22 +153,36 @@ function callCountLimiter(maxCalls) {
 
     // 최초 실행 시 자정까지의 시간차 이후 호출 횟수 초기화
     // 타이머 만료 시 resetCount 실행, getMillisecondsUntilMidnight() 값이 delay로 들어감
-    timeoutId = setTimeout(resetCount, getMillisecondsUntilMidnight(30));
 
     return function() {
-        if(count < maxCalls) {
-            count++;
-            console.log(`api 호출 횟수 ${count}`);
-            return;
+        count++;
+        console.log("count => ",count);
+        console.log("maxCalls =>",maxCalls);
+        if(count <= maxCalls) {
+            console.log("if true");
+            // console.log(`api 호출 횟수 ${count}/5`);
+            document.getElementById('count').innerHTML = `api 호출 횟수 ${count}/5`;
         } else {
-            console.log('api 호출 제한 초과');
-            throw new Error;
+            console.log("else");
+            // console.log('api 호출 제한 초과, 30초 뒤 다시 시도해주세요');
+            //timeoutId = setTimeout(resetCount, getMillisecondsUntilMidnight(timeToReset));
+            timeCheck = setInterval(() => {
+                timeToReset -= 1;
+                document.getElementById('count').innerHTML = `api 호출 제한 초과, ${timeToReset}초 뒤 다시 시도해주세요`;
+                if(timeToReset  < 1){
+                    console.log(timeToReset)
+                    clearInterval(timeCheck);
+                    resetCount();
+                    return;
+                }
+            }, 1000);
+            //throw new Error;
         };
     };
 }
 
 //클로저
-const limitApiCalls = callCountLimiter(5);
+const limitApiCalls = callCountLimiter(maxCalls);
 
 //날씨 가져오기
 async function getWeather() {
@@ -88,9 +194,12 @@ async function getWeather() {
 
         console.log(cityName, url, jsonData, '성공', currentWeather);
         weather.innerHTML = currentWeather;
+        limitApiCalls();
+        
     } catch(err) {
         console.log('날씨 정보를 불러오는 데 실패했습니다.');
-        throw new Error;
+        console.log(err);
+        alert('날씨 정보를 불러오는 데 실패했습니다.');
     }
 }
 
@@ -100,23 +209,34 @@ async function getWeather() {
 
 //검색 버튼 클릭 시 이벤트리스너
 searchBtn.addEventListener('click', () => {
-    if(cityInput.value !=='') {
-        getWeather();
-    } else {
-        alert('도시 이름을 입력해주세요');
-        cityInput.focus();
-    }
+    clickEnterInput();
 });
 
 //인풋에 입력 후 커서 밖으로 이동 시 이벤트리스너
 cityInput.addEventListener('keydown', (e) => {
-    if(e.keyCode == 13 && e.target.value !== ''){
+    if(e.keyCode == 13){
         e.preventDefault();
-        getWeather();
-    } else {
-        alert('도시 이름을 입력해주세요');
-        cityInput.focus();
+        clickEnterInput();
     }
 });
+
+function clickEnterInput(){
+    // if(infoForm.checkValidity()) {
+        
+    // }
+
+
+    if(cityInput.value == '') {
+        alert('도시 이름을 입력해주세요');
+        cityInput.focus();
+        return;
+    } else if(count <= maxCalls){
+        getWeather();
+    } else{
+        callCountLimiter(maxCalls);
+    }
+
+    
+}
 
 
