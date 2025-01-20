@@ -59,62 +59,58 @@ async function getWeatherData(url) {
 // const infoUrl = '60.196.157.219:8004/minScript'
 const infoForm = document.getElementById('infoForm');
 const responseDiv = document.getElementById('response');
-
 const infoUrl = 'https://jsonplaceholder.typicode.com/posts'
 infoForm.action = infoUrl;
 
-function answerRequest(data) {
-    return fetch(infoUrl,{ //이 서버 주소로 요청해라
-        method: 'POST',
-        headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-        },
-        // mode: "no-cors",
-        body: JSON.stringify(data),
-        // body: JSON.stringify({
-        //     "userId" : "asd",
-        //     "title" : "sdfksjldfksdf",
-        //     "body" : "sdfksjldfksdfsdflksdfj;ksdf;slkdf;lk"
-        // }) //데이터를 json형태의 문자열로 변환
-    }).then((res) => { //응답이 오면
-        responseDiv.innerText = res.status + ' 요청 성공';
-        return res.json();
-    }).then((json) => {
-        console.log(json);
-        let jsonText = JSON.stringify(json);
-        responseDiv.innerText += '\n' + jsonText;
+async function answerRequest(data) {
+    try {
+        const response = await fetch(infoUrl, { //이 서버 주소로 요청해라
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+            body: JSON.stringify(data),//데이터를 json형태의 문자열로 변환
+        })
+
+        if (!response.ok) { //서버 연결은 됐으나, 오류 응답 반환시에 대한 에러 처리
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        // fetch 요청 다음에 실행되도록 await를 사용
+        const json =  await response.json();
+        const jsonText = JSON.stringify(json);
+        responseDiv.innerText =  `${response.status} 요청 성공\n${jsonText}`;
         return jsonText;
-    }).catch((err) => {
-        console.log(err);
-        responseDiv.innerText = '요청 실패';
-    });
+    } catch(err) {
+        responseDiv.innerText = 'fetch 요청 실패' + err;
+    };
 }
 
-document.querySelector('.submit').addEventListener('click', (e) => {
+//폼 데이터 추출 함수
+function getFormData(form) {
+    let data = {};
+    const formData = new FormData(form);
+    for (const [key, value] of formData.entries()) {
+        data[key] = value;
+    }
+    return data;
+}
+
+//폼 제출 함수수
+async function submitForm(e) {
     e.preventDefault();
-    // answerRequest(member);
 
-    async function getMember() {
-        try {
-            let formdata = new FormData(infoForm);
-            let data = {};
-            
-            // 폼데이터 키/값 확인
-            for (const [key, value] of formdata.entries()) {
-                console.log(`${key}: ${value}`);
-                data[key] = value;
-                // console.log(data);
-            }
-            const result = await answerRequest(data);
-            console.log('응답데이터 :' + result);
-            return result;
-        } catch(err) {
-            console.log('fetch 통신 에러 ' + err)
-        };
+    try {
+        const data = getFormData(infoForm);
+        const result = await answerRequest(data);
+        console.log('응답데이터 ' + result);
+        // return result;
+    } catch(err) {
+        console.log('fetch 통신 에러 ' + err);
     };
+};
 
-    getMember();
-});
+document.querySelector('.submit').addEventListener('click', submitForm);
 
 function reSetTime(){
     return 10;
