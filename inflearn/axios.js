@@ -1,0 +1,1 @@
+// fetch 말고 axios 사용해보자

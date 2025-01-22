@@ -59,10 +59,30 @@ const user = {
 
 console.log(typeof user); //object
 
-//string으로 바꿔준다. 
+//string으로 바꿔준다.
 const jsonString = JSON.stringify(user, replacer);
 console.log(typeof jsonString, jsonString); //string {"name":"lee","age":20,"gender":"male"}
 
 const obj = JSON.parse(jsonString);
 console.log(obj)
 
+
+// const member = (data) =>{
+//     return fetch(`url`,{
+//         method: 'POST',
+//         // headers:{
+//         //     'Content-Type':'application/json'
+//         // },
+//         body: JSON.stringify({
+//             'memberId': 'sss',
+//             'age':20
+//         })
+//     })
+// }
+
+
+// const feexx = (data) =>{
+//     return fetch(`url/${data}`,{
+//         method: 'GET'
+//     })
+// }

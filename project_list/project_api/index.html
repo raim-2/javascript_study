@@ -4,27 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="./scss/common.css">
+    <link rel="stylesheet" href="./scss/style.css">
 </head>
 <body>
-    <form action="" method="post">
+    <form action="" method="post" class="city-form">
+        <h2 class="title">오늘 날씨</h2>
         <input type="text" class="city-input" placeholder="영문으로 도시 이름을 입력하세요." name="data" autocomplete="off" required>
-        <button type="button" name="search" value="search" class="search-btn">검색</button>
+        <button type="button" name="search" value="search" class="btn search-btn">검색</button>
         <!-- <button type="submit" formaction="./result.html" formmethod="post" formtarget="_self">제출</button> -->
         <!-- <input type="submit" value="submit" name="submit" onclick="window.location='https://www.naver.com/'"> -->
+        <p id="weather"></p>
+        <p id="count"></p>
+        <!-- <p id="log"></p> -->
     </form>
-    <p id="weather"></p>
-    <p id="count"></p>
-    <!-- <p id="log"></p> -->
     
-    <form action="" id="infoForm" name="infoForm" style="display: flex;flex-direction: column;gap: 10px;width: 300px;border: 3px solid plum;padding: 20px;">
+    <form action="" class="info-form" id="infoForm" name="infoForm">
         <label for="memberId">
             아이디 :
             <input type="text" id="memberId" required name="userId">
         </label>
-        <!-- <label for="password">
+        <label for="password">
             패스워드 :
             <input type="password" id="password" name="password" autocomplete="off" required>
-        </label> -->
+        </label>
         <label for="title">
             타이틀 :
             <input type="text" id="title" name="title" autocomplete="off" required>
@@ -55,7 +58,7 @@
                 수영
             </label>
         </fieldset> -->
-        <button type="submit" class="submit">제출</button>
+        <button type="submit" class="btn submit">제출</button>
     </form>
     <div id="response"></div>
     <script src="./project2.js" type="module"></script>

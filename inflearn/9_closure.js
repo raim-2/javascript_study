@@ -20,6 +20,8 @@ function outerFunction() {
 /**
  * 반환된 innerFunction이 실행되지 않은 상태로 closure에 저장
  * 외부 함수 실행되면서 렉시컬 환경이 생성됨
+ * ** 외부 함수는 실행됨 그 후, innerFunction이 반환되어 closure에 저장됨
+ * → closure()를 호출했을 때 비로소 innerFunction이 실행됨
  */
 const closure = outerFunction();
 

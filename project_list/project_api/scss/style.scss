@@ -1,0 +1,19 @@
+@use "/project_list/project_api/scss/common.scss" as common;
+//api 호출 프로젝트 스타일
+
+.title {
+    margin: 0 0 3.6rem;
+}
+.city-form {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 80%;
+    padding: 8rem;
+    aspect-ratio: 5/2;
+    background: common.$bg-color;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    will-change: transform;
+}
