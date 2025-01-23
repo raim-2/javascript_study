@@ -92,6 +92,18 @@ textarea:not([rows]) {
 }
 
 /* 공통 css */
+.hidden {
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin-left: -1px;
+  border: 0;
+  white-space: nowrap;
+  -webkit-clip-path: rect(0, 0, 0, 0);
+          clip-path: rect(0, 0, 0, 0);
+}
+
 html {
   height: 100%;
   background: #fff;
@@ -110,17 +122,39 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 0;
+  gap: 30px;
   height: 100%;
   min-width: 320px;
   margin: 0;
   font-size: 1.6rem; /* 16px */
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 1rem;
+  padding: 2rem;
+  border: 1px solid #c6c6c6;
+}
+
 input, textarea {
   padding: 1rem;
   border: 1px solid #c6c6c6;
   border-radius: 8px;
+}
+
+label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+input, textarea {
+  flex: 1;
 }
 
 .btn {
@@ -133,41 +167,22 @@ input, textarea {
   font-weight: 600;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
-  gap: 10px;
-  padding: 2rem;
-  border: 1px solid #c6c6c6;
-}
-
-.hidden {
-  overflow: hidden;
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin-left: -1px;
-  border: 0;
-  white-space: nowrap;
-  -webkit-clip-path: rect(0, 0, 0, 0);
-          clip-path: rect(0, 0, 0, 0);
-}
-
 .title {
   margin: 0 0 3.6rem;
 }
 
+.text {
+  white-space: pre-line;
+}
+
 .city-form {
-  display: none;
-  position: absolute;
+  position: fixed;
   left: 50%;
   top: 50%;
-  width: 80%;
   padding: 8rem;
   aspect-ratio: 5/2;
   background: #fff;
   text-align: center;
   transform: translate(-50%, -50%);
+  will-change: transform;
 }
